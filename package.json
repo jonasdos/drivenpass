@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/app.js",
-    "dev": "ts-node-dev src/app.ts"
+    "start": "npm run seed && node dist/app.js",
+    "dev": "ts-node-dev src/app.ts",
+    "migrate:dev": "npx prisma migrate dev && tsx prisma/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -21,12 +22,18 @@
   ],
   "author": "Jonas Dos",
   "license": "ISC",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "bugs": {
     "url": "https://github.com/jonasdos/drivenpass/issues"
   },
   "homepage": "https://github.com/jonasdos/drivenpass#readme",
   "dependencies": {
     "@prisma/client": "^6.0.1",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
+    "crypt": "^0.0.2",
     "dotenv": "^16.4.6",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
