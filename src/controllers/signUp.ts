@@ -11,8 +11,8 @@ export async function signUp(req: Request, res: Response) {
       message: "Falha ao confirmar a senha"
     } as Error
   }
-  const result = await newUserService(newUser)
+  await newUserService(newUser)
 
-  res.status(201).send(result)
+  res.status(201).send("Usuário criado com sucesso")
   
 }

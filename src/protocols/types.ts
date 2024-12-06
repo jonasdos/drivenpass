@@ -7,3 +7,5 @@ export type Error = {
 export type NewUserRequest = Omit<User, "id" | "createdAt"> & {
   password2: string
 }
+
+export type UserLoginRequest = Omit<User, "id" | "createdAt" | "name"> 

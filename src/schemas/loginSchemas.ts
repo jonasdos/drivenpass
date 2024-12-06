@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { NewUserRequest } from "protocols/types";
+import { NewUserRequest, UserLoginRequest } from "protocols/types";
 
 
 export const newUserSchema = Joi.object<NewUserRequest>({
@@ -7,4 +7,10 @@ export const newUserSchema = Joi.object<NewUserRequest>({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   password2: Joi.string().min(6).required()
+})
+export const loginSchema = Joi.object<UserLoginRequest>({
+  
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required()
+  
 })
