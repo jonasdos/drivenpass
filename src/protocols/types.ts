@@ -4,4 +4,6 @@ export type Error = {
   message: string
 }
 
-export type NewUserRequest = Omit<User, "id" | "creatAt" | "credentials">
+export type NewUserRequest = Omit<User, "id" | "createdAt"> & {
+  password2: string
+}

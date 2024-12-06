@@ -9,11 +9,11 @@ export function validateSchema(schema: ObjectSchema) {
       abortEarly: false
     })
     if(validate.error) {
-      res.status(400).send({
-        errors: validate.error.details.map(
+      res.status(422).send(
+        validate.error.details.map(
           detail => detail.message
         )
-      })
+      )
       return
     }
     next()
