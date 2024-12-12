@@ -26,6 +26,10 @@ if(error.type === "Not Found") {
   res.status(404).send(error.message)
   return
 }
+if(error.type === "teste") {
+  res.status(404).send(error.message)
+  return
+}
 res.status(500).send("Erro desconhecido")
 return
 }

@@ -15,7 +15,7 @@ export async function loginService(loginData: UserLoginRequest) {
   }
   const match = await bcrypt.compare(loginData.password, user.password)
   if(match) {
-    const token = jwt.sign({iserID: user.id}, process.env.SECRET, {expiresIn: 3000})
+    const token = jwt.sign({user}, process.env.SECRET, {expiresIn: 3000})
     return token
   } else {
     throw {
