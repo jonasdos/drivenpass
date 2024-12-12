@@ -1,7 +1,7 @@
 import Cryptr from "cryptr";
 import dotenv from "dotenv"
-import { NewCredentialRequest } from "../protocols/types";
-import { createNewCredentialRepository, getAllCredentialsByIdRepository, getCredentialByIdRepository, getCredentialsByUserIdRepository } from "../repositories/credentialsRepository";
+import { NewCredentialRequest, UpdateCredential } from "../protocols/types";
+import { createNewCredentialRepository, deleteCredentialRepository, getAllCredentialsByIdRepository, getCredentialByIdRepository, getCredentialsByUserIdRepository, updateCredentialRepository } from "../repositories/credentialsRepository";
 
 dotenv.config()
 const cryptr = new Cryptr(process.env.SECRET)
@@ -33,4 +33,20 @@ export async function getAllCredentialsService(id: number) {
     result[i].password = cryptr.decrypt(result[i].password)
   }
   return result
+}
+
+export async function updateCredentialService(userId: number, credentialId: number, credentialData: UpdateCredential) {
+  credentialData.password = cryptr.encrypt(credentialData.password)
+  const result = updateCredentialRepository(userId, credentialId, credentialData)
+  if(!result) {
+    throw {
+      type: "Not Found",
+      message: "Erro ao atualizar credencial"
+    }
+  }
+  return result
+}
+export async function deleteCredentialService(id: number) {
+  const result = await deleteCredentialRepository(id)
+  return result 
 }

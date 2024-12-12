@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { NewCredentialRequest } from "../protocols/types";
-import { createCredentialService, getAllCredentialsService, getCredentialByIdService } from "../services/CredentialService";
+import { NewCredentialRequest, UpdateCredential } from "../protocols/types";
+import { createCredentialService, deleteCredentialService, getAllCredentialsService, getCredentialByIdService, updateCredentialService } from "../services/credentialService";
 import { userData } from "../middlewares/jwtvalidation";
 
 
@@ -34,4 +34,34 @@ export async function getCredentials(req: Request, res: Response) {
   }
   res.status(200).send(allCredentials)
 
+}
+
+export async function updateCredential(req: Request, res: Response) {
+  const userTokenData = await userData(req.headers.authorization)
+  const credentialId = Number(req.params.id) 
+  const updateCredentialData = req.body as UpdateCredential
+
+  await updateCredentialService(userTokenData.user.id, credentialId, updateCredentialData)
+
+  res.status(204).send("Credencial atualizada com sucesso")
+}
+
+export async function deleteCredential(req: Request, res: Response) {
+  const credentialId = Number(req.params.id) 
+  const userTokenData = await userData(req.headers.authorization)
+  const allCredentials = await getAllCredentialsService(userTokenData.user.id)
+  let credencialIsValid = false as boolean
+  allCredentials.map(item => {
+    item.id === credentialId ? credencialIsValid = true : ''
+  })
+  if(!credencialIsValid) {
+    throw {
+      type: "Not Found",
+      message: "Item não encontrado"
+    }
+  }
+
+ await deleteCredentialService(credentialId)
+
+ res.status(204).send("No Content")
 }

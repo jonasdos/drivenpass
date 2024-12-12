@@ -1,4 +1,4 @@
-import { NewCredentialRequest } from "../protocols/types";
+import { NewCredentialRequest, UpdateCredential } from "../protocols/types";
 import { prisma } from "../database/database";
 
 
@@ -32,3 +32,31 @@ export async function getCredentialByIdRepository(credentialId: number) {
   })
   return result
 }
+export async function updateCredentialRepository(userId: number, credentialId: number, credentialData: UpdateCredential) {
+  const result = await prisma.credential.update({
+    where: {
+      id: credentialId
+    },
+    data: {
+      title: credentialData.title,
+      password: credentialData.password,
+      url: credentialData.url,
+      username: credentialData.username,
+    }
+  })
+  
+  return result
+}
+
+export async function deleteCredentialRepository(id: number) {
+  const result = await prisma.credential.delete({
+    where:{
+      id:id
+    }
+  })
+  return result
+}
+/*{
+  "email": "jonas@gamil.com",
+  "password": "123456"
+}*/
