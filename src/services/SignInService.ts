@@ -1,4 +1,4 @@
-import repository from "../repositories/newUserRepository";
+import repository from "../repositories/userRepository";
 import { UserLoginRequest } from "../protocols/types";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"

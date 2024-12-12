@@ -1,4 +1,4 @@
-import repository from "../repositories/newUserRepository";
+import repository from "../repositories/userRepository";
 import { NewUserRequest } from "../protocols/types";
 
 

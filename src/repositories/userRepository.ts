@@ -20,10 +20,19 @@ async function createNewUser(user: NewUserRequest) {
 
 return result
 }
+async function deleteUser(userId: number) {
+  const result = await prisma.user.delete({
+    where: {
+      id: userId
+    }
+  })
+  return
+}
 
 const repository = {
   getUserByEmail, 
-  createNewUser
+  createNewUser,
+  deleteUser
 }
 
 export default repository

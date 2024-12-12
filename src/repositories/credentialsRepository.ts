@@ -56,7 +56,3 @@ export async function deleteCredentialRepository(id: number) {
   })
   return result
 }
-/*{
-  "email": "jonas@gamil.com",
-  "password": "123456"
-}*/

@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import errorHandler from "./middlewares/errorHandler"
 import loginRouter from "./routes/login"
 import credentialsRouter from "./routes/credentials"
+import eraseRouter from "./routes/erase"
 
 dotenv.config() 
 const app = express()
@@ -14,7 +15,7 @@ app.get("/health", (req: Request, res: Response) => {
 })
 app.use(loginRouter)
 app.use(credentialsRouter)
-
+app.use(eraseRouter)
 app.use(errorHandler)
 app.listen(process.env.PORT, ()=> {
   console.log(`Servidor rodando na porta: ${process.env.PORT}`)
