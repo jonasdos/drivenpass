@@ -3,7 +3,7 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "module": "CommonJS",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
     "baseUrl": "src",
     "skipLibCheck": true
   },
