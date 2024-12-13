@@ -2,7 +2,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { User } from "@prisma/client";
 import { UserData } from "protocols/types";
 
 dotenv.config()
@@ -19,7 +18,7 @@ export async function jwtvalidation (req: Request, res: Response, next: NextFunc
     const validateToken = jwt.verify(token, process.env.SECRET as string)
    
   if(validateToken) {
-    
+    console.log("validou token")
     next()
   }
   else {

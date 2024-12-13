@@ -6,23 +6,30 @@ import { createNewCredentialRepository, deleteCredentialRepository, getAllCreden
 dotenv.config()
 const cryptr = new Cryptr(process.env.SECRET)
 
-export async function createCredentialService(newCrendential: NewCredentialRequest) {
-  const userCredentials = await getCredentialsByUserIdRepository(newCrendential.userId)
+export async function createCredentialService(newCrendential: NewCredentialRequest, userId: number) {
+  const userCredentials = await getCredentialsByUserIdRepository(userId)
   userCredentials.map(item => {
-    if(item.title === newCrendential.title) {
+    if(item.title === newCrendential.title || item.username === newCrendential.username ) {
       throw {
         type: "Conflict",
-        message: "O usuário já possuí esse titulo de credencial associado."
+        message: "O usuário já possuí esse titulo ou username de credencial cadastrado."
       }
     }
   })
   newCrendential.password = cryptr.encrypt(newCrendential.password)
-  const result = await createNewCredentialRepository(newCrendential)
+  const result = await createNewCredentialRepository(newCrendential, userId)
   return result
 }
 
 export async function getCredentialByIdService(id: number) {
   const result = await getCredentialByIdRepository(id)
+ 
+   if(result === null) {
+    throw {
+      type: "Not Found",
+      message: "Credencial não existe"
+    }
+  }
   result.password = cryptr.decrypt(result.password)
   return result
 }
@@ -36,8 +43,27 @@ export async function getAllCredentialsService(id: number) {
 }
 
 export async function updateCredentialService(userId: number, credentialId: number, credentialData: UpdateCredential) {
+  const oldCredential = await getCredentialByIdRepository(credentialId)
+  if(oldCredential === null) {
+    throw {
+      type: "Not Found",
+      message: "Credencial não encontrada"
+    }
+  }
+  const userCredentials = await getCredentialsByUserIdRepository(userId)
+  userCredentials.map(item => {
+    if(item.title === credentialData.title && item.id != credentialId  ) {
+      throw {
+        type: "Conflict",
+        message: "Titulo da credencial indisponivel para este usuário."
+      }
+    }
+  })
+  
   credentialData.password = cryptr.encrypt(credentialData.password)
-  const result = updateCredentialRepository(userId, credentialId, credentialData)
+  console.log("encriptografou a nova senha")
+
+  const result = await updateCredentialRepository(userId, credentialId, credentialData)
   if(!result) {
     throw {
       type: "Not Found",

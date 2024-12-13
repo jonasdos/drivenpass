@@ -30,6 +30,26 @@ if(error.type === "teste") {
   res.status(404).send(error.message)
   return
 }
+if(error.type === "Bad Request") {
+  res.status(400).send(error.message)
+  return
+}
+
 res.status(500).send("Erro desconhecido")
 return
+}
+
+
+export function paramsErrorVerify( error: Error, 
+  req: Request, 
+  res: Response, 
+  next: NextFunction) {
+ if(Number(req.params.id)<0) {
+  throw {
+type: "Bad Request",
+message: "Rota invalida"
+  }
+ }
+ console.log("Validou parametro")
+ next()
 }

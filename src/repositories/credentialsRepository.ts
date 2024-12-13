@@ -10,9 +10,17 @@ export async function getCredentialsByUserIdRepository(userId: number) {
   return result
 }
 
-export async function createNewCredentialRepository(newCrendential: NewCredentialRequest) {
+export async function createNewCredentialRepository(newCrendential: NewCredentialRequest, userId: number) {
+  const newCredential = {
+    title: newCrendential.title,
+    url: newCrendential.url,
+    username: newCrendential.username,
+    password: newCrendential.password,
+    userId: userId
+  }
+  
   const result = await prisma.credential.create(
-    {data: newCrendential}
+    {data: newCredential}
   )
   return result
 }

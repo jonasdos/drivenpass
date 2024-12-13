@@ -21,7 +21,7 @@ export type NewUserRequest = Omit<User, "id" | "createdAt"> & {
 
 export type UserLoginRequest = Omit<User, "id" | "createdAt" | "name"> 
 
-export type NewCredentialRequest = Omit<Credential,"id" | "createdAt" >
+export type NewCredentialRequest = Omit<Credential,"id" | "createdAt"| "userId" >
 
 export type UpdateCredential = Omit<Credential, "id" | "createdAt" | "userId">
 

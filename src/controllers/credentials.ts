@@ -7,14 +7,16 @@ import { userData } from "../middlewares/jwtvalidation";
 
 
 export async function createNewCredential(req: Request, res: Response) {
+  const userTokenData = await userData(req.headers.authorization)
   const newCrendential = req.body as NewCredentialRequest
-  const result =  await createCredentialService(newCrendential)
-  res.status(201).send(result)
+  const result =  await createCredentialService(newCrendential, userTokenData.user.id)
+  res.status(201).send("Nova credencial cadastrada: "+result.title)
 }
 
 export async function getCredentials(req: Request, res: Response) {
   const userTokenData = await userData(req.headers.authorization)
-  if(req.params.id) {
+  
+  if(req.params.id) {    
     const credential = await getCredentialByIdService(Number(req.params.id))
     if(!credential) {
       throw {

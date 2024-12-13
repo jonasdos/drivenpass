@@ -5,8 +5,8 @@ export const NewCredentialData = Joi.object<NewCredentialRequest>({
   url: Joi.string().required(),
   title: Joi.string().required(),
   username: Joi.string().required(),
-  password: Joi.string().required(),
-  userId: Joi.number().required()
+  password: Joi.string().required()
+
 })
 
 export const updateCredentialData = Joi.object<UpdateCredential>({
