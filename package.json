@@ -2,7 +2,7 @@
   "name": "drivenpass",
   "version": "1.0.0",
   "description": "Gerenciador de senhas",
-  "main": "app.js",
+  "main": "dist/src/app.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run migration:run && npm run seed && node dist/src/app.js",
