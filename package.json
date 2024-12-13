@@ -5,8 +5,11 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run seed && node dist/app.js",
+    "start": "npm run migration:run && npm run seed && node dist/src/app.js",
+    "migration:run": "prisma migrate deploy",
+    "seed": "prisma db seed",
     "dev": "ts-node-dev src/app.ts",
+    
     "migrate:dev": "npx prisma migrate dev && tsx prisma/seed.ts"
   },
   "repository": {
