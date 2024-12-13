@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserLoginRequest } from "../protocols/types";
-import { loginService } from "../services/SignInService";
+import { loginService } from "../services/signInService";
 
 
 export async function signIn(req: Request, res: Response) {
